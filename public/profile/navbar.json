@@ -10,24 +10,24 @@
             "href": "/"
         },
         {
-            "title": "About",
+            "title": "About Us",
             "href": "/about"
         },
         {
-            "title": "Skills",
-            "href": "/skills"
+            "title": "How To Do",
+            "href": "/howtodo"
         },
         {
-            "title": "Education",
-            "href": "/education"
+            "title": "Login",
+            "href": "/login"
         },
         {
-            "title": "Experience",
-            "href": "/experience"
+            "title": "Register",
+            "href": "/register"
         },
         {
-            "title": "Projects",
-            "href": "/projects"
+            "title": "Partners",
+            "href": "/partners"
         },
         {
             "title": "Resume",

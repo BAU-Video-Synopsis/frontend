@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import FallbackSpinner from './components/FallbackSpinner';
@@ -7,8 +8,10 @@ import endpoints from './constants/endpoints';
 
 function MainApp() {
   const [data, setData] = useState(null);
-
+  const [item, setItem] = useState('');
   useEffect(() => {
+    console.log('Local Storage Item is ', localStorage.getItem('newUserId'));
+    setItem(localStorage.getItem('newUserId'));
     fetch(endpoints.routes, {
       method: 'GET',
     })
@@ -19,7 +22,10 @@ function MainApp() {
 
   return (
     <div className="MainApp">
-      <NavBarWithRouter />
+      {
+        item ? null : <NavBarWithRouter />
+      }
+
       <main className="main">
         <Switch>
           <Suspense fallback={<FallbackSpinner />}>

@@ -1,19 +1,21 @@
 {
     "education":[
         {
-            "title": "Jun 20XX - Jun 20YY",
-            "cardTitle": "B.Tech, Computer Science",
-            "cardSubtitle":"XYZ University, City",
-            "cardDetailedText": "CGPA - 9.5",
-            "icon" : {
-                "src": "images/education/lorem-ipsum.png"
-            }
+            "cardTitle": "Prepare To Upload",
+            "cardSubtitle":"Firstly, the video you wish to synopsis must be in the mp4 format and should be smaller than 300MB."
         },
         {
-            "title": "Apr 20XX",
-            "cardTitle": "High School",
-            "cardSubtitle":"ABC School, City",
-            "cardDetailedText": "Marks - 95%"
+            "cardTitle": "Where To Upload",
+            "cardSubtitle":"If your video meets these requirements, you should click the Let's Start button on the homepage and upload your video."
+        },
+        {
+            "cardTitle": "How To Download",
+            "cardSubtitle":"Upon completion of the upload process, your video will undergo AI processing by our application, and the summarized version will be available for download."
+        },
+        {
+            "cardTitle": "How To See Past Videos",
+            "cardSubtitle":"If you are logged into our application, you can access your summarized video in the Videos section."
         }
+
     ]
 }

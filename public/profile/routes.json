@@ -11,9 +11,9 @@
             "headerTitle": "Skills"
         },
         {
-            "component": "Education",
-            "path": "/education",
-            "headerTitle": "Education"
+            "component": "HowToDo",
+            "path": "/howtodo",
+            "headerTitle": "Steps"
         },
         {
             "component": "Experience",
@@ -24,6 +24,13 @@
             "component": "Projects",
             "path": "/projects",
             "headerTitle": "Projects"
+        },
+        {
+            "component": "Login",
+            "path": "/login",
+            "headerTitle": "Login"
         }
+
+        
     ]
 }
