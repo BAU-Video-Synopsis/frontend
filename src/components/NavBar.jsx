@@ -3,6 +3,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
+import Button from 'react-bootstrap/Button';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { IoLogOutSharp } from 'react-icons/io5';
 import endpoints from '../constants/endpoints';
 import ThemeToggler from './ThemeToggler';
 
@@ -40,8 +43,9 @@ const NavBar = () => {
   const theme = useContext(ThemeContext);
   const [data, setData] = useState(null);
   const [expanded, setExpanded] = useState(false);
-
+  const [item, setItem] = useState('');
   useEffect(() => {
+    setItem(localStorage.getItem('newUserId'));
     fetch(endpoints.navbar, {
       method: 'GET',
     })
@@ -80,37 +84,92 @@ const NavBar = () => {
         />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto" />
-          <Nav>
-            {data
-              && data.sections?.map((section, index) => (section?.type === 'link' ? (
-                <ExternalNavLink
-                  key={section.title}
-                  href={section.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setExpanded(false)}
-                  className="navbar__link"
-                  theme={theme}
-                >
-                  {section.title}
-                </ExternalNavLink>
-              ) : (
-                <InternalNavLink
-                  key={section.title}
-                  onClick={() => setExpanded(false)}
-                  exact={index === 0}
-                  activeClassName="navbar__link--active"
-                  className="navbar__link"
-                  to={section.href}
-                  theme={theme}
-                >
-                  {section.title}
-                </InternalNavLink>
-              )))}
-          </Nav>
+          {
+            item
+              ? (
+                <>
+                  <Nav>
+                    {data
+                    && data.newsection?.map((section, index) => (section?.type === 'link' ? (
+                      <ExternalNavLink
+                        key={section.title}
+                        href={section.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setExpanded(false)}
+                        className="navbar__link"
+                        theme={theme}
+                      >
+                        {section.title}
+                      </ExternalNavLink>
+                    ) : (
+                      <InternalNavLink
+                        key={section.title}
+                        onClick={() => setExpanded(false)}
+                        exact={index === 0}
+                        activeClassName="navbar__link--active"
+                        className="navbar__link"
+                        to={section.href}
+                        theme={theme}
+                      >
+                        {section.title}
+                      </InternalNavLink>
+                    )))}
+                  </Nav>
+                  <div style={{
+                    marginLeft: 20,
+                  }}
+                  >
+                    <Button
+                      onClick={() => {
+                        localStorage.setItem('newUserId', '');
+                        window.location.reload();
+                      }}
+                    >
+                      <IoLogOutSharp />
+                      Çıkış Yap
+                    </Button>
+                  </div>
+                </>
+              )
+              : (
+                <>
+                  <Nav>
+                    {data
+                    && data.sections?.map((section, index) => (section?.type === 'link' ? (
+                      <ExternalNavLink
+                        key={section.title}
+                        href={section.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setExpanded(false)}
+                        className="navbar__link"
+                        theme={theme}
+                      >
+                        {section.title}
+                      </ExternalNavLink>
+                    ) : (
+                      <InternalNavLink
+                        key={section.title}
+                        onClick={() => setExpanded(false)}
+                        exact={index === 0}
+                        activeClassName="navbar__link--active"
+                        className="navbar__link"
+                        to={section.href}
+                        theme={theme}
+                      >
+                        {section.title}
+                      </InternalNavLink>
+                    )))}
+                  </Nav>
+
+                </>
+              )
+          }
           <ThemeToggler
             onClick={() => setExpanded(false)}
           />
+
         </Navbar.Collapse>
       </Container>
     </Navbar>

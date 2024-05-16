@@ -22,15 +22,35 @@ function MainApp() {
 
   return (
     <div className="MainApp">
-      {
-        item ? null : <NavBarWithRouter />
-      }
-
-      <main className="main">
-        <Switch>
-          <Suspense fallback={<FallbackSpinner />}>
-            <Route exact path="/" component={Home} />
-            {data
+      <NavBarWithRouter />
+      {item
+        && item ? (
+          <main className="main">
+            <Switch>
+              <Suspense fallback={<FallbackSpinner />}>
+                <Route exact path="/" component={Home} />
+                {data
+              && data.newsection.map((route) => {
+                const SectionComponent = React.lazy(() => import('./components/' + route.component));
+                return (
+                  <Route
+                    key={route.headerTitle}
+                    path={route.path}
+                    component={() => (
+                      <SectionComponent header={route.headerTitle} />
+                    )}
+                  />
+                );
+              })}
+              </Suspense>
+            </Switch>
+          </main>
+        ) : (
+          <main className="main">
+            <Switch>
+              <Suspense fallback={<FallbackSpinner />}>
+                <Route exact path="/" component={Home} />
+                {data
               && data.sections.map((route) => {
                 const SectionComponent = React.lazy(() => import('./components/' + route.component));
                 return (
@@ -43,9 +63,11 @@ function MainApp() {
                   />
                 );
               })}
-          </Suspense>
-        </Switch>
-      </main>
+              </Suspense>
+            </Switch>
+          </main>
+        )}
+
     </div>
   );
 }

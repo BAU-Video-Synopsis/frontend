@@ -34,6 +34,33 @@
             "href": "https://drive.google.com/file/d/13kaPsdMNDsM4LV9g7m5-E5PTildp-yYf/view?usp=sharing",
             "type": "link"
         }
+    ],
+    "newsection": [
+        {
+            "title": "Home",
+            "href": "/"
+        },
+        {
+            "title": "About Us",
+            "href": "/about"
+        },
+        {
+            "title": "How To Do",
+            "href": "/howtodo"
+        },
+        {
+            "title": "Partners",
+            "href": "/partners"
+        },
+        {
+            "title": "Video History",
+            "href": "/history"
+        },
+        {
+            "title": "Resume",
+            "href": "https://drive.google.com/file/d/13kaPsdMNDsM4LV9g7m5-E5PTildp-yYf/view?usp=sharing",
+            "type": "link"
+        }
     ]
 
 }

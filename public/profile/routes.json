@@ -32,5 +32,39 @@
         }
 
         
+    ],
+    "newsection": [
+        {
+            "component": "About",
+            "path": "/about",
+            "headerTitle": "About"
+        },
+        {
+            "component": "Skills",
+            "path": "/skills",
+            "headerTitle": "Skills"
+        },
+        {
+            "component": "HowToDo",
+            "path": "/howtodo",
+            "headerTitle": "Steps"
+        },
+        {
+            "component": "Experience",
+            "path": "/experience",
+            "headerTitle": "Experience"
+        },
+        {
+            "component": "Experience",
+            "path": "/history",
+            "headerTitle": "Experience"
+        },
+        {
+            "component": "Projects",
+            "path": "/projects",
+            "headerTitle": "Projects"
+        }
+          
     ]
+    
 }
