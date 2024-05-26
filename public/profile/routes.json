@@ -29,7 +29,11 @@
             "component": "Login",
             "path": "/login",
             "headerTitle": "Login"
-        }
+        },
+        {
+            "component": "Register",
+            "path": "/register",
+            "headerTitle": "Register"}
 
         
     ],

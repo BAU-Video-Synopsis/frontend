@@ -25,17 +25,16 @@ function Login() {
       });
       console.log(response.status);
       if (response.status === 200) {
-        // const data = await response.json();
-        // Başarılı giriş durumunda yapılacak işlemler
         console.log('Giriş başarılı:');
         localStorage.setItem('newUserId', '123');
         history.push('/');
+        window.location.reload();
       } else {
         alert('Hata Giriş Başarısız');
         console.error('Giriş başarısız');
       }
     } catch (error) {
-      // console.error('Sunucu hatası:', error);
+      console.error('Sunucu hatası:', error);
     }
   };
 

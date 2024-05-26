@@ -24,15 +24,20 @@ function Home() {
   const [show, setShow] = useState(false);
   const theme = useContext(ThemeContext);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
+
   const handleUpload = async () => {
     try {
       if (!selectedFile) {
         alert('Lütfen dosya seçin!');
         return;
       }
+
+      setIsLoading(true);
 
       const formData = new FormData();
       formData.append('video', selectedFile);
@@ -43,18 +48,24 @@ function Home() {
         mode: 'cors', // CORS modunu belirt
       });
 
+      setIsLoading(false);
+
       if (!response.ok) {
         throw new Error('Dosya yükleme başarısız!');
       }
 
       const newdata = await response.json();
       console.log('Video uploaded successfully:', newdata.message);
+      alert('Upload successful');
       // Başarı durumuna göre kullanıcıya bilgi verebilirsiniz
     } catch (error) {
+      setIsLoading(false);
       console.error('Error uploading video:', error);
+      alert('Error uploading video');
       // Hata durumunda kullanıcıya bilgi verebilirsiniz
     }
   };
+
   useEffect(() => {
     fetch(endpoints.home, {
       method: 'GET',
@@ -134,7 +145,9 @@ function Home() {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => handleUpload()}>Submit</Button>
+          <Button onClick={handleUpload} disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'Submit'}
+          </Button>
           <Button onClick={() => setShow(false)}>Close</Button>
         </Modal.Footer>
       </Modal>

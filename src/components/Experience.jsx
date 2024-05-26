@@ -1,107 +1,197 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Timeline, TimelineItem } from 'vertical-timeline-component-for-react';
-import { Container } from 'react-bootstrap';
-import ReactMarkdown from 'react-markdown';
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
+import {
+  Container, Table, Button, Alert, Modal,
+} from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { ThemeContext } from 'styled-components';
-import Fade from 'react-reveal';
 import Header from './Header';
-import endpoints from '../constants/endpoints';
-import FallbackSpinner from './FallbackSpinner';
 import '../css/experience.css';
+import myvideo from './videos/myvideo2.mp4';
 
 const styles = {
-  ulStyle: {
-    listStylePosition: 'outside',
-    paddingLeft: 20,
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100vw',
+    position: 'relative', // For positioning the table correctly
   },
-  subtitleContainerStyle: {
-    marginTop: 10,
-    marginBottom: 10,
+  tableWrapper: {
+    width: '85%',
+    marginTop: 20,
+    zIndex: 1, // To ensure the table is above the video
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Semi-transparent background for readability
+    padding: '20px',
+    borderRadius: '10px',
   },
-  subtitleStyle: {
-    display: 'inline-block',
+  th: {
+    backgroundColor: '#f2f2f2',
+    color: '#333',
+    padding: '10px',
   },
-  inlineChild: {
-    display: 'inline-block',
+  td: {
+    padding: '10px',
   },
-  itemStyle: {
-    marginBottom: 10,
+  button: {
+    marginLeft: 10,
+  },
+  noData: {
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  videoBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    zIndex: 0,
+    opacity: 0.7, // Slight transparency for the video background
   },
 };
 
-function Experience(props) {
-  const theme = useContext(ThemeContext);
-  const { header } = props;
-  const [data, setData] = useState(null);
+const mockVideos = [
+  {
+    _id: '1',
+    name: 'Sample Video 1',
+    createdAt: '2024-05-20T14:20:00Z',
+    videoUrl: 'http://localhost:3001/uploads/compressed_18069232-uhd_3840_2160_24fps.mp4',
+  },
+  {
+    _id: '2',
+    name: 'Sample Video 2',
+    createdAt: '2024-05-21T14:20:00Z',
+    videoUrl: 'https://www.example.com/video2',
+  },
+  {
+    _id: '3',
+    name: 'Sample Video 3',
+    createdAt: '2024-05-22T14:20:00Z',
+    videoUrl: 'https://www.example.com/video3',
+  },
+];
 
+function Experience({ header }) {
+  const [videos, setVideos] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [currentVideoUrl, setCurrentVideoUrl] = useState('');
   useEffect(() => {
-    fetch(endpoints.experiences, {
+    fetch('http://localhost:3001/getVideos', {
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-      .then((res) => res.json())
-      .then((res) => setData(res.experiences))
-      .catch((err) => err);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Response is', data[0].videoUrl);
+        setVideos(data);
+      })
+      .catch((error) => console.error('Error fetching videos:', error));
   }, []);
 
-  return (
-    <>
-      <Header title={header} />
+  const handleOpenVideo = (videoUrl) => {
+    setCurrentVideoUrl(videoUrl);
+    setShowModal(true);
+  };
 
-      {data
-        ? (
-          <div className="section-content-container">
-            <Container>
-              <Timeline
-                lineColor={theme.timelineLineColor}
-              >
-                {data.map((item) => (
-                  <Fade>
-                    <TimelineItem
-                      key={item.title + item.dateText}
-                      dateText={item.dateText}
-                      dateInnerStyle={{ background: theme.accentColor }}
-                      style={styles.itemStyle}
-                      bodyContainerStyle={{ color: theme.color }}
-                    >
-                      <h2 className="item-title">
-                        {item.title}
-                      </h2>
-                      <div style={styles.subtitleContainerStyle}>
-                        <h4 style={{ ...styles.subtitleStyle, color: theme.accentColor }}>
-                          {item.subtitle}
-                        </h4>
-                        {item.workType && (
-                        <h5 style={styles.inlineChild}>
-                    &nbsp;·
-                          {' '}
-                          {item.workType}
-                        </h5>
-                        )}
-                      </div>
-                      <ul style={styles.ulStyle}>
-                        {item.workDescription.map((point) => (
-                          <div key={point}>
-                            <li>
-                              <ReactMarkdown
-                                children={point}
-                                components={{
-                                  p: 'span',
-                                }}
-                              />
-                            </li>
-                            <br />
-                          </div>
-                        ))}
-                      </ul>
-                    </TimelineItem>
-                  </Fade>
+  const handleDownloadVideo = (videoUrl) => {
+    const link = document.createElement('a');
+    link.href = videoUrl;
+    link.download = videoUrl.split('/').pop();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setCurrentVideoUrl('');
+  };
+
+  return (
+    <div style={{
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      overflowY: 'hidden',
+    }}
+    >
+      <video
+        src={myvideo}
+        autoPlay
+        loop
+        muted
+        style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: -1,
+          overflowY: 'hidden',
+        }}
+      />
+      <Container style={styles.container}>
+        <div style={styles.tableWrapper}>
+          {videos.length === 0 ? (
+            <Alert variant="info" style={styles.noData}>
+              Görüntülenecek video yok
+            </Alert>
+          ) : (
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th style={{ ...styles.th, width: '40%' }}>Name</th>
+                  <th style={{ ...styles.th, width: '30%' }}>Date</th>
+                  <th style={{ ...styles.th, width: '30%' }}>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {videos.map((video) => (
+                  <tr key={video._id}>
+                    <td style={styles.td}>{video.name}</td>
+                    <td style={styles.td}>{new Date(video.createdAt).toLocaleDateString()}</td>
+                    <td style={styles.td}>
+                      <Button
+                        variant="primary"
+                        style={styles.button}
+                        onClick={() => handleOpenVideo(video.videoUrl)}
+                      >
+                        Open Video
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        style={styles.button}
+                        onClick={() => handleDownloadVideo(video.videoUrl)}
+                      >
+                        Download Video
+                      </Button>
+                    </td>
+                  </tr>
                 ))}
-              </Timeline>
-            </Container>
-          </div>
-        ) : <FallbackSpinner /> }
-    </>
+              </tbody>
+            </Table>
+          )}
+        </div>
+      </Container>
+      <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Video Player</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {currentVideoUrl && (
+            <video controls style={{ width: '100%' }}>
+              <source src={'http://localhost:3001' + currentVideoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          )}
+        </Modal.Body>
+      </Modal>
+    </div>
   );
 }
 

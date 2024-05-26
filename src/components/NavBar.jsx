@@ -1,10 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import React, { useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
-import Button from 'react-bootstrap/Button';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { IoLogOutSharp } from 'react-icons/io5';
 import endpoints from '../constants/endpoints';
 import ThemeToggler from './ThemeToggler';
@@ -44,6 +43,7 @@ const NavBar = () => {
   const [data, setData] = useState(null);
   const [expanded, setExpanded] = useState(false);
   const [item, setItem] = useState('');
+
   useEffect(() => {
     setItem(localStorage.getItem('newUserId'));
     fetch(endpoints.navbar, {
@@ -120,15 +120,15 @@ const NavBar = () => {
                     marginLeft: 20,
                   }}
                   >
-                    <Button
+                    <IoLogOutSharp
+                      size={30}
+                      color="white"
                       onClick={() => {
                         localStorage.setItem('newUserId', '');
                         window.location.reload();
                       }}
-                    >
-                      <IoLogOutSharp />
-                      Çıkış Yap
-                    </Button>
+                      style={{ cursor: 'pointer' }}
+                    />
                   </div>
                 </>
               )
@@ -166,9 +166,9 @@ const NavBar = () => {
                 </>
               )
           }
-          <ThemeToggler
+          {/* <ThemeToggler
             onClick={() => setExpanded(false)}
-          />
+          /> */}
 
         </Navbar.Collapse>
       </Container>
