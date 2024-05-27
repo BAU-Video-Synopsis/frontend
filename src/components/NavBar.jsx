@@ -2,7 +2,7 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import React, { useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 import { IoLogOutSharp } from 'react-icons/io5';
 import endpoints from '../constants/endpoints';
@@ -38,6 +38,7 @@ const InternalNavLink = styled(NavLink)`
 `;
 
 const NavBar = () => {
+  const history = useHistory();
   const theme = useContext(ThemeContext);
   const [data, setData] = useState(null);
   const [expanded, setExpanded] = useState(false);
@@ -125,6 +126,7 @@ const NavBar = () => {
                       onClick={() => {
                         localStorage.setItem('newUserId', '');
                         window.location.reload();
+                        history.push('/');
                       }}
                       style={{ cursor: 'pointer' }}
                     />
