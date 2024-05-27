@@ -27,8 +27,9 @@ function Home() {
   const theme = useContext(ThemeContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentVideoUrl, setCurrentVideoUrl] = ('');
-  const [videoText, setVideoText] = ('');
+  const [videoUrl, setVideoUrl] = useState('');
+  const [videoText, setVideoText] = useState('');
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -50,7 +51,7 @@ function Home() {
       const response = await fetch('http://localhost:3001/uploadVideo', {
         method: 'POST',
         body: formData,
-        mode: 'cors', // CORS modunu belirt
+        mode: 'cors',
       });
 
       setIsLoading(false);
@@ -60,17 +61,21 @@ function Home() {
         throw new Error('Dosya yükleme başarısız!');
       } else {
         const newdata = await response.json();
-        setCurrentVideoUrl(newdata.video_url);
-        console.log('Video uploaded successfully:', newdata.videoUrl);
-        alert('Upload successful');
+        console.log('API response:', newdata);
+        const formattedVideoUrl = newdata.videoUrl.replace(/\\/g, '/');
+        console.log('Formatted video URL:', formattedVideoUrl);
+        setVideoUrl(`http://localhost:3001${formattedVideoUrl}`);
       }
     } catch (error) {
       setIsLoading(false);
       console.error('Error uploading video:', error);
       alert('Error uploading video');
-      // Hata durumunda kullanıcıya bilgi verebilirsiniz
     }
   };
+
+  useEffect(() => {
+    console.log('Updated video URL:', videoUrl);
+  }, [videoUrl]);
 
   useEffect(() => {
     fetch(endpoints.home, {
@@ -157,20 +162,19 @@ function Home() {
           <Button onClick={() => setShow(false)}>Close</Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showVideoModal} onHide={setShowVideoModal(false)} size="lg" centered>
+      <Modal show={showVideoModal} onHide={() => setShowVideoModal(false)} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Video Player</Modal.Title>
+          <Modal.Title className="mb-3 text-dark">Video Player</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {currentVideoUrl ? (
+          {videoUrl ? (
             <video controls style={{ width: '100%' }}>
-              <source src={'http://localhost:3001' + currentVideoUrl} type="video/avi" />
+              <source src={videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           ) : (
             <p>{videoText}</p>
           )}
-
         </Modal.Body>
       </Modal>
     </>

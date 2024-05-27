@@ -52,26 +52,6 @@ const styles = {
   },
 };
 
-const mockVideos = [
-  {
-    _id: '1',
-    name: 'Sample Video 1',
-    createdAt: '2024-05-20T14:20:00Z',
-    videoUrl: 'http://localhost:3001/uploads/compressed_18069232-uhd_3840_2160_24fps.mp4',
-  },
-  {
-    _id: '2',
-    name: 'Sample Video 2',
-    createdAt: '2024-05-21T14:20:00Z',
-    videoUrl: 'https://www.example.com/video2',
-  },
-  {
-    _id: '3',
-    name: 'Sample Video 3',
-    createdAt: '2024-05-22T14:20:00Z',
-    videoUrl: 'https://www.example.com/video3',
-  },
-];
 
 function VideoHistory({ header }) {
   const [videos, setVideos] = useState([]);
@@ -90,10 +70,12 @@ function VideoHistory({ header }) {
         setVideos(data);
       })
       .catch((error) => console.error('Error fetching videos:', error));
+
   }, []);
 
   const handleOpenVideo = (videoUrl) => {
-    setCurrentVideoUrl(videoUrl);
+    const fullVideoUrl = `http://localhost:3001${videoUrl}`;
+    setCurrentVideoUrl(fullVideoUrl);
     setShowModal(true);
   };
 
@@ -139,7 +121,7 @@ function VideoHistory({ header }) {
         <div style={styles.tableWrapper}>
           {videos.length === 0 ? (
             <Alert variant="info" style={styles.noData}>
-              Görüntülenecek video yok
+              There are no videos to view
             </Alert>
           ) : (
             <Table striped bordered hover>
@@ -185,7 +167,7 @@ function VideoHistory({ header }) {
         <Modal.Body>
           {currentVideoUrl && (
             <video controls style={{ width: '100%' }}>
-              <source src={'http://localhost:3001' + currentVideoUrl} type="video/mp4" />
+              <source src={currentVideoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           )}
