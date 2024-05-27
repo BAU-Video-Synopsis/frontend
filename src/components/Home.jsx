@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect, useContext } from 'react';
 import Typewriter from 'typewriter-effect';
@@ -22,10 +23,12 @@ const styles = {
 function Home() {
   const [data, setData] = useState(null);
   const [show, setShow] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
   const theme = useContext(ThemeContext);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [currentVideoUrl, setCurrentVideoUrl] = ('');
+  const [videoText, setVideoText] = ('');
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -37,6 +40,8 @@ function Home() {
         return;
       }
       setIsLoading(true);
+      setShowVideoModal(true);
+      setVideoText('Your video is processing ...');
       const isLogined = !!localStorage.getItem('newUserId');
       const formData = new FormData();
       formData.append('video', selectedFile);
@@ -51,13 +56,14 @@ function Home() {
       setIsLoading(false);
 
       if (!response.ok) {
+        setVideoText('Your video is not uploaded ...');
         throw new Error('Dosya yükleme başarısız!');
+      } else {
+        const newdata = await response.json();
+        setCurrentVideoUrl(newdata.video_url);
+        console.log('Video uploaded successfully:', newdata.videoUrl);
+        alert('Upload successful');
       }
-
-      const newdata = await response.json();
-      console.log('Video uploaded successfully:', newdata.message);
-      alert('Upload successful');
-      // Başarı durumuna göre kullanıcıya bilgi verebilirsiniz
     } catch (error) {
       setIsLoading(false);
       console.error('Error uploading video:', error);
@@ -150,6 +156,22 @@ function Home() {
           </Button>
           <Button onClick={() => setShow(false)}>Close</Button>
         </Modal.Footer>
+      </Modal>
+      <Modal show={showVideoModal} onHide={setShowVideoModal(false)} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Video Player</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {currentVideoUrl ? (
+            <video controls style={{ width: '100%' }}>
+              <source src={'http://localhost:3001' + currentVideoUrl} type="video/avi" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <p>{videoText}</p>
+          )}
+
+        </Modal.Body>
       </Modal>
     </>
   );
