@@ -52,7 +52,6 @@ const styles = {
   },
 };
 
-
 function VideoHistory({ header }) {
   const [videos, setVideos] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -70,7 +69,6 @@ function VideoHistory({ header }) {
         setVideos(data);
       })
       .catch((error) => console.error('Error fetching videos:', error));
-
   }, []);
 
   const handleOpenVideo = (videoUrl) => {
