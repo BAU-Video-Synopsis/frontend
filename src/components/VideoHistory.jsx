@@ -125,7 +125,7 @@ function VideoHistory({ header }) {
                 {videos.map((video) => (
                   <tr key={video._id}>
                     <td style={styles.td}>{video.name}</td>
-                    <td style={styles.td}>{new Date(video.createdAt).toLocaleDateString()}</td>
+                    <td style={styles.td}>{video.time}</td>
                     <td style={styles.td}>
                       <Button
                         variant="primary"
