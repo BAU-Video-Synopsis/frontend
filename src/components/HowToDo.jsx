@@ -7,10 +7,10 @@ import { ThemeContext } from 'styled-components';
 import endpoints from '../constants/endpoints';
 import Header from './Header';
 import FallbackSpinner from './FallbackSpinner';
-import '../css/education.css';
+import '../css/howtodo.css';
 import howtodobg from './videos/howtodobg.jpg';
 
-function Education(props) {
+function HowToDo(props) {
   const theme = useContext(ThemeContext);
   const { header } = props;
   const [data, setData] = useState(null);
@@ -18,7 +18,7 @@ function Education(props) {
   const [mode, setMode] = useState('VERTICAL_ALTERNATING');
 
   useEffect(() => {
-    fetch(endpoints.education, {
+    fetch(endpoints.howtodo, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -59,7 +59,7 @@ function Education(props) {
                 hideControls
                 allowDynamicUpdate
                 useReadMore={false}
-                items={data.education}
+                items={data.data}
                 cardHeight={250}
                 cardWidth={400}
                 mode={mode}
@@ -72,11 +72,11 @@ function Education(props) {
                 }}
               >
                 <div className="chrono-icons">
-                  {data.education.map((education) => (education.icon ? (
+                  {data.data.map((res) => (res.icon ? (
                     <img
-                      key={education.icon.src}
-                      src={education.icon.src}
-                      alt={education.icon.alt}
+                      key={res.icon.src}
+                      src={res.icon.src}
+                      alt={res.icon.alt}
                     />
                   ) : null))}
                 </div>
@@ -89,8 +89,8 @@ function Education(props) {
   );
 }
 
-Education.propTypes = {
+HowToDo.propTypes = {
   header: PropTypes.string.isRequired,
 };
 
-export default Education;
+export default HowToDo;

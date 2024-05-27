@@ -67,8 +67,8 @@ function Register() {
           }}
           onSubmit={handleRegister}
         >
-          <h2 className="mb-3">Register</h2>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <h2 className="mb-3 text-dark">Register</h2>
+          <Form.Group className="mb-3 text-dark" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"
@@ -79,7 +79,7 @@ function Register() {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3 text-dark " controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <InputGroup>
               <Form.Control
@@ -95,7 +95,7 @@ function Register() {
             </InputGroup>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+          <Form.Group className="mb-3 text-dark" controlId="formBasicConfirmPassword">
             <Form.Label>Confirm Password</Form.Label>
             <InputGroup>
               <Form.Control

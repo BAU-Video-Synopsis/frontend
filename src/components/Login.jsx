@@ -25,16 +25,16 @@ function Login() {
       });
       console.log(response.status);
       if (response.status === 200) {
-        console.log('Giriş başarılı:');
+        console.log('Login Succesfull:');
         localStorage.setItem('newUserId', '123');
         history.push('/');
         window.location.reload();
       } else {
-        alert('Hata Giriş Başarısız');
-        console.error('Giriş başarısız');
+        alert('Error Login Failed');
+        console.error('Login failed');
       }
     } catch (error) {
-      console.error('Sunucu hatası:', error);
+      console.error('Server error:', error);
     }
   };
 
@@ -59,23 +59,23 @@ function Login() {
           }}
           onSubmit={handleLogin}
         >
-          <h2 className="mb-3">Giriş Yap</h2>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email adresi</Form.Label>
+          <h2 className="mb-3 text-dark">Login</h2>
+          <Form.Group className="mb-3 text-dark" controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
             <Form.Control
               type="email"
-              placeholder="Email adresinizi girin"
+              placeholder="Enter Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Parola</Form.Label>
+          <Form.Group className="mb-3 text-dark" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
-              placeholder="Parolanızı girin"
+              placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -83,7 +83,7 @@ function Login() {
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Giriş Yap
+            Login
           </Button>
         </Form>
       </Container>

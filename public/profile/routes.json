@@ -54,14 +54,9 @@
             "headerTitle": "Steps"
         },
         {
-            "component": "Experience",
-            "path": "/experience",
-            "headerTitle": "Experience"
-        },
-        {
-            "component": "Experience",
+            "component": "VideoHistory",
             "path": "/history",
-            "headerTitle": "Experience"
+            "headerTitle": "VideoHistory"
         },
         {
             "component": "Projects",

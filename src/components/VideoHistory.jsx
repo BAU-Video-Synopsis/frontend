@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import '../css/experience.css';
+import '../css/videohistory.css';
 import myvideo from './videos/myvideo2.mp4';
 
 const styles = {
@@ -73,7 +73,7 @@ const mockVideos = [
   },
 ];
 
-function Experience({ header }) {
+function VideoHistory({ header }) {
   const [videos, setVideos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentVideoUrl, setCurrentVideoUrl] = useState('');
@@ -195,8 +195,8 @@ function Experience({ header }) {
   );
 }
 
-Experience.propTypes = {
+VideoHistory.propTypes = {
   header: PropTypes.string.isRequired,
 };
 
-export default Experience;
+export default VideoHistory;

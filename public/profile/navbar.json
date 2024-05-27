@@ -1,8 +1,8 @@
 {
     "logo" : {
         "source": "images/logo.png",
-        "height" : 45,
-        "width" : 50
+        "height" : 70,
+        "width" : 70
     },
     "sections": [
         {

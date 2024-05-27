@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 import { IoLogOutSharp } from 'react-icons/io5';
 import endpoints from '../constants/endpoints';
-import ThemeToggler from './ThemeToggler';
 
 const styles = {
   logoStyle: {
