@@ -36,12 +36,12 @@ function Home() {
         alert('Lütfen dosya seçin!');
         return;
       }
-
       setIsLoading(true);
-
+      const isLogined = !!localStorage.getItem('newUserId');
       const formData = new FormData();
       formData.append('video', selectedFile);
-
+      formData.append('isLogined', isLogined);
+      formData.append('fileName', selectedFile.name);
       const response = await fetch('http://localhost:3001/uploadVideo', {
         method: 'POST',
         body: formData,
