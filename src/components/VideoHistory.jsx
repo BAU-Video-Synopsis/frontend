@@ -143,13 +143,6 @@ function VideoHistory({ header }) {
                       >
                         Open Video
                       </Button>
-                      <Button
-                        variant="secondary"
-                        style={styles.button}
-                        onClick={() => handleDownloadVideo(video.videoUrl)}
-                      >
-                        Download Video
-                      </Button>
                     </td>
                   </tr>
                 ))}
