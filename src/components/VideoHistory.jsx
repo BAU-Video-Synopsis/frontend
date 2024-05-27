@@ -77,15 +77,6 @@ function VideoHistory({ header }) {
     setShowModal(true);
   };
 
-  const handleDownloadVideo = (videoUrl) => {
-    const link = document.createElement('a');
-    link.href = videoUrl;
-    link.download = videoUrl.split('/').pop();
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   const handleCloseModal = () => {
     setShowModal(false);
     setCurrentVideoUrl('');
